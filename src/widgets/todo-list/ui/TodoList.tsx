@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTodos, TodoCard } from "@/entities/todo";
+import { TodoAddForm } from "@/features/todo-add";
 import { Spinner } from "@/shared";
 
 export const TodoList = () => {
@@ -21,6 +22,9 @@ export const TodoList = () => {
 
   return (
     <div className="space-y-4">
+      {/* Todo 추가 폼 */}
+      <TodoAddForm />
+
       {/* Todo 목록 */}
       <div className="space-y-2">
         {data?.todos.map((todo) => (

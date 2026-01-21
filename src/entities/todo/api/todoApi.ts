@@ -1,5 +1,5 @@
 import { baseApi } from "@/shared";
-import type { TodosResponse, GetTodosParams, Todo } from "@/entities/todo/model/types";
+import type { TodosResponse, GetTodosParams, Todo, CreateTodoRequest } from "@/entities/todo/model/types";
 
 export const todoApi = {
   // 전체 Todo 목록 조회
@@ -17,6 +17,12 @@ export const todoApi = {
   // 특정 유저의 Todo 목록 조회
   getTodosByUserId: async (userId: number): Promise<TodosResponse> => {
     const { data } = await baseApi.get(`/todos/user/${userId}`);
+    return data;
+  },
+
+  // Todo 생성
+  createTodo: async (request: CreateTodoRequest): Promise<Todo> => {
+    const { data } = await baseApi.post("/todos/add", request);
     return data;
   },
 };

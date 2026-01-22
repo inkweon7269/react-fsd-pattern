@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTodos, TodoCard } from "@/entities/todo";
 import { TodoAddForm } from "@/features/todo-add";
+import { TodoDeleteButton } from "@/features/todo-delete";
 import { Spinner } from "@/shared";
 
 export const TodoList = () => {
@@ -28,7 +29,11 @@ export const TodoList = () => {
       {/* Todo 목록 */}
       <div className="space-y-2">
         {data?.todos.map((todo) => (
-          <TodoCard key={todo.id} todo={todo} />
+          <TodoCard
+            key={todo.id}
+            todo={todo}
+            action={<TodoDeleteButton todoId={todo.id} />}
+          />
         ))}
       </div>
 

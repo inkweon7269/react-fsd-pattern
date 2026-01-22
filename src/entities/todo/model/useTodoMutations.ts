@@ -15,3 +15,16 @@ export const useCreateTodo = () => {
     },
   });
 };
+
+// Todo 삭제 훅
+export const useDeleteTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => todoApi.deleteTodo(id),
+    onSuccess: () => {
+      // 모든 todo 캐시 무효화 (목록 + 상세)
+      queryClient.invalidateQueries({ queryKey: todoKeys.all });
+    },
+  });
+};

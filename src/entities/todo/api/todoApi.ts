@@ -1,5 +1,5 @@
 import { baseApi } from "@/shared";
-import type { TodosResponse, GetTodosParams, Todo, CreateTodoRequest } from "@/entities/todo/model/types";
+import type { TodosResponse, GetTodosParams, Todo, CreateTodoRequest, DeleteTodoResponse } from "@/entities/todo/model/types";
 
 export const todoApi = {
   // 전체 Todo 목록 조회
@@ -23,6 +23,12 @@ export const todoApi = {
   // Todo 생성
   createTodo: async (request: CreateTodoRequest): Promise<Todo> => {
     const { data } = await baseApi.post("/todos/add", request);
+    return data;
+  },
+
+  // Todo 삭제
+  deleteTodo: async (id: number): Promise<DeleteTodoResponse> => {
+    const { data } = await baseApi.delete(`/todos/${id}`);
     return data;
   },
 };

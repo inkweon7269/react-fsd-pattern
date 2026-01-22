@@ -18,7 +18,7 @@ This project uses **Feature-Sliced Design (FSD)** architecture with strict unidi
 ### Layer Hierarchy (top to bottom)
 
 ```
-app → pages → widgets → entities → shared
+app → pages → widgets → features → entities → shared
 ```
 
 Upper layers can only import from lower layers. Never import upward.
@@ -30,6 +30,7 @@ src/
 ├── app/           # App config, providers (QueryProvider)
 ├── pages/         # Route pages (compose widgets)
 ├── widgets/       # Independent UI blocks with own state
+├── features/      # User interaction logic (forms, actions)
 ├── entities/      # Business domain models (todo: api, model, ui)
 └── shared/        # Reusable utilities (baseApi, Spinner)
 ```
@@ -50,6 +51,8 @@ import { useTodos } from "@/entities/todo/model/useTodos";
 **Segments**: Each entity/widget has `api/`, `model/`, `ui/` segments for separation of concerns.
 
 **Query Keys**: React Query keys follow hierarchical pattern in `todoKeys` object for cache management.
+
+**Mutations**: Use `useMutation` with cache invalidation via `queryClient.invalidateQueries()`. Mutation hooks are in `model/useTodoMutations.ts`.
 
 ## Tech Stack
 

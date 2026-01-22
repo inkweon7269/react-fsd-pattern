@@ -23,3 +23,9 @@ export interface CreateTodoRequest {
   completed: boolean;
   userId: number;
 }
+
+// Todo 삭제 응답 타입
+export interface DeleteTodoResponse extends Todo {
+  isDeleted: boolean;
+  deletedOn: string;
+}

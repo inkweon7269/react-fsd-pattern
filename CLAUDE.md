@@ -5,10 +5,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev       # Start development server
-npm run build     # Type check and build for production
-npm run lint      # Run ESLint
-npm run format    # Format code with Prettier
+npm run dev           # Start development server
+npm run build         # Type check and build for production
+npm run preview       # Preview production build locally
+npm run lint          # Run ESLint
+npm run format        # Format code with Prettier
+npm run format:check  # Check formatting without modifying
 ```
 
 ## Architecture
@@ -30,7 +32,7 @@ src/
 ├── app/           # App config, providers (QueryProvider)
 ├── pages/         # Route pages (compose widgets)
 ├── widgets/       # Independent UI blocks with own state
-├── features/      # User interaction logic (forms, actions)
+├── features/      # User interaction logic (todo-add, todo-delete)
 ├── entities/      # Business domain models (todo: api, model, ui)
 └── shared/        # Reusable utilities (baseApi, Spinner)
 ```
@@ -53,6 +55,22 @@ import { useTodos } from "@/entities/todo/model/useTodos";
 **Query Keys**: React Query keys follow hierarchical pattern in `todoKeys` object for cache management.
 
 **Mutations**: Use `useMutation` with cache invalidation via `queryClient.invalidateQueries()`. Mutation hooks are in `model/useTodoMutations.ts`.
+```typescript
+// Example mutation pattern
+export const useCreateTodo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: todoApi.createTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
+    },
+  });
+};
+```
+
+## API Backend
+
+This app uses **DummyJSON** (https://dummyjson.com) as the mock API backend. The base URL is configured in `shared/api/baseApi.ts`.
 
 ## Tech Stack
 

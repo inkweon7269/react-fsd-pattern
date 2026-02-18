@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTodos, TodoCard } from "@/entities/todo";
+import { useTodos, TodoCard, useTodoDetailStore } from "@/entities/todo";
 import { TodoAddForm } from "@/features/todo-add";
 import { TodoDeleteButton } from "@/features/todo-delete";
 import { Spinner } from "@/shared";
@@ -7,6 +7,8 @@ import { Spinner } from "@/shared";
 export const TodoList = () => {
   const [page, setPage] = useState(0);
   const limit = 10;
+
+  const { selectedTodoId, toggleDetail } = useTodoDetailStore();
 
   const { data, isLoading, isError, error } = useTodos({
     limit,
@@ -32,6 +34,8 @@ export const TodoList = () => {
           <TodoCard
             key={todo.id}
             todo={todo}
+            isActive={selectedTodoId === todo.id}
+            onClick={() => toggleDetail(todo.id)}
             action={<TodoDeleteButton todoId={todo.id} />}
           />
         ))}

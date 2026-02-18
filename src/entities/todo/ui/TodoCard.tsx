@@ -4,11 +4,18 @@ import type { ReactNode } from "react";
 interface TodoCardProps {
   todo: Todo;
   action?: ReactNode;
+  isActive?: boolean;
+  onClick?: () => void;
 }
 
-export const TodoCard = ({ todo, action }: TodoCardProps) => {
+export const TodoCard = ({ todo, action, isActive, onClick }: TodoCardProps) => {
   return (
-    <div className="flex-1 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+    <div
+      className={`flex-1 p-4 border rounded-lg shadow-sm hover:shadow-md transition-all ${
+        onClick ? "cursor-pointer" : ""
+      } ${isActive ? "border-blue-500 bg-blue-50" : ""}`}
+      onClick={onClick}
+    >
       <div className="flex items-start gap-3">
         <input type="checkbox" checked={todo.completed} readOnly className="mt-1 h-4 w-4" />
         <div className="flex-1">
